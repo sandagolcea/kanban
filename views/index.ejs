@@ -9,16 +9,20 @@
 </head>
 <body>
   <div class="container">
+    <div class="fill">
     <h3>Welcome to KanBan</h3>
-    <form action="/cards" method="post" accept-charset="utf-8">
-      <input type="text" size="10" name="card">
+    <form action="/lists" method="post" accept-charset="utf-8">
+      <input type="text" size="10" name="list" placeholder="Add a list..">
       <input type="submit" value="Add">
     </form>
-    <%if (list.length > 0) { %>
-      <p>Your card is: <%=list%></p>
+    <%if (list.length > 0) {%><p>Your cards are: </p> <%}%>
+    <%for (i in list) { %>
+      <p class='list'><%=list[i]%></p>
     <%}%>
+    </div>
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../cardMaker.js" type="text/javascript"></script>
 </body>
 </html>

@@ -1,7 +1,31 @@
+/************************************
+      Main Page Elements
+************************************/
+
 body {
-  background-color: #3366FF;
+  background-color: #303440;
 }
 
 .container {
-  background-color: #85C2FF;
+  background-color: #5e93c4;
+  height:100%;
+}
+
+form {
+  padding: 5px;
+}
+
+/************************************
+                Lists
+************************************/
+.list {
+  position: relative;
+  display: inline-block;
+  float: left;
+  margin: 1%;
+  background-color: #8da1b8;
+  width: 30%;
+  padding-bottom: 30%; 
+  border-radius: 5%;
+  text-align: center;
 }

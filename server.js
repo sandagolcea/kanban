@@ -6,18 +6,17 @@ var app = express();
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
-var cardList = {};
+var mainList = [];
 
 app.set('view engine','ejs');
 app.use(express.static(__dirname+'/public'));
 
 app.get('/', function(request,response){
-  response.render('index',{list : cardList});
+  response.render('index',{list : mainList});
 });
 
-app.post('/cards', parseUrlencoded, function (request, response) {
-  cardList = request.body.card;
-  console.log(cardList);
+app.post('/lists', parseUrlencoded, function (request, response) {
+  mainList.push(request.body.list);
   response.redirect('/');
 });
 
