@@ -14,6 +14,7 @@
   "author": "Sanda Golcea",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^2.2.4",
     "express": "^4.11.2"
   }
 }
