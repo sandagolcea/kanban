@@ -5,10 +5,18 @@
   <title>KanBan</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
   <div class="container">
     <h3>Welcome to KanBan</h3>
+    <form action="/cards" method="post" accept-charset="utf-8">
+      <input type="text" size="10" name="card">
+      <input type="submit" value="Add">
+    </form>
+    <%if (list.length > 0) { %>
+      <p>Your card is: <%=list%></p>
+    <%}%>
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
