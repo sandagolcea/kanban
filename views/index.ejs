@@ -26,10 +26,11 @@
         <input type="text" size="10" name="card" placeholder="Add a card..">
         <input type="submit" value="Add">
       </form>
-
-      <%list[key].cards.forEach(function(card){ %>
-        <p class="cards"><%=card.content%></p>
-      <%});%>
+      <%if (list[key].cards) {%>
+        <%list[key].cards.forEach(function(card){ %>
+          <p class="cards"><%=card.content%></p>
+        <%});%>
+      <%}%>
 
       </div>
       <%}%>

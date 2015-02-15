@@ -2,34 +2,39 @@ var http = require('http');
 var server = http.createServer();
 var express = require('express');
 var app = express();
+var mongoose = require('mongoose');
+require('./lists.js');
 
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
-var mainList = {};
-var listId = 0;
-var cardId = 0;
+var List = mongoose.model('List');
 
 app.set('view engine','ejs');
 app.use(express.static(__dirname+'/public'));
 
 app.get('/', function (request,response) {
-  response.render('index',{list : mainList});
+  List.find(function (err, myLists) {
+    if (err) return console.error(err);
+    console.log(myLists);
+    response.render('index',{list : myLists});
+  });
 });
 
 app.post('/lists', parseUrlencoded, function (request, response) {
-  mainList[listId] = {name: request.body.list, cards: []};
-  console.log(mainList[listId]);
-  listId++;
+  var myList = new List({ name: request.body.list});
+  
+  myList.save(function (err, newList) {
+    if (err) return console.error(err);
+    console.log(newList.id);
+  });
+
   response.redirect('/');
 });
 
 app.post('/cards', parseUrlencoded, function (request,response) {
   list = request.body.listId;
-  if (!mainList[list]) console.log("mainList null");
-  console.log("Card:"+request.body.card);
-  mainList[list].cards.push({id: cardId, content: request.body.card});
-  console.log("Main cards:"+mainList[list].cards);
+  // mainList[list].cards.push({id: cardId, content: request.body.card});
   response.redirect('/');
 });
 

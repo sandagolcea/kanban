@@ -29,14 +29,14 @@ form {
   display: inline-block;
   float: left;
   margin: 1%;
-  background-color: #8da1b8;
+  background-color: #60728a;
   width: 30%;
   padding-bottom: 3%; 
   border-radius: 5%;
 }
 
 .cards {
-  background-color: #BdD1E8;
+  background-color: #3895ff;
   margin-left: 20%;
   margin-right: 20%;
   text-align: center;
