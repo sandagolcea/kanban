@@ -14,17 +14,29 @@
       <input type="text" size="10" name="list" placeholder="Add a list..">
       <input type="submit" value="Add">
     </form>
+    <%if (Object.keys(list).length > 0) {%><p>Your cards are: </p> <%}%>
+    
     <!-- Lists with cards holders -->
-    <%if (list.length > 0) {%><p>Your cards are: </p> <%}%>
-    <%for (i in list) { %>
-      <form action="/cards" method="post" accept-charset="utf-8" class='list'>
-        <%=list[i]%><br>
-        <input type="hidden" name="list"  value="<%=list[i]%>" />
+    <%for (var key in list) { %>
+      <%if (list.hasOwnProperty(key)) { %>
+      <div  class='list'>
+      <form action="/cards" method="post" accept-charset="utf-8">
+        <%=list[key].name%><br>
+        <input type="hidden" name="listId"  value="<%=key%>" />
         <input type="text" size="10" name="card" placeholder="Add a card..">
         <input type="submit" value="Add">
       </form>
+
+      <%list[key].cards.forEach(function(card){ %>
+        <p class="cards"><%=card.content%></p>
+      <%});%>
+
+      </div>
+      <%}%>
     <%}%>
+
     <!-- End of lists with cards -->
+
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

@@ -31,6 +31,13 @@ form {
   margin: 1%;
   background-color: #8da1b8;
   width: 30%;
-  padding-bottom: 10%; 
+  padding-bottom: 3%; 
   border-radius: 5%;
+}
+
+.cards {
+  background-color: #BdD1E8;
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
 }
