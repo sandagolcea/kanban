@@ -9,33 +9,52 @@ var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
 var List = mongoose.model('List');
+var Card = mongoose.model('Card');
 
 app.set('view engine','ejs');
 app.use(express.static(__dirname+'/public'));
 
 app.get('/', function (request,response) {
-  List.find(function (err, myLists) {
+
+  List.find()
+  .populate('cards') // only works if we pushed refs to children
+  .exec(function (err, myLists) {
     if (err) return console.error(err);
     console.log(myLists);
     response.render('index',{list : myLists});
-  });
+  }); 
+
 });
 
 app.post('/lists', parseUrlencoded, function (request, response) {
-  var myList = new List({ name: request.body.list});
+  var myList = new List({ name: request.body.list });
   
   myList.save(function (err, newList) {
     if (err) return console.error(err);
     console.log(newList.id);
+    response.redirect('/');
   });
 
-  response.redirect('/');
 });
 
 app.post('/cards', parseUrlencoded, function (request,response) {
-  list = request.body.listId;
-  // mainList[list].cards.push({id: cardId, content: request.body.card});
-  response.redirect('/');
+  var myCard = new Card({ _creator: request.body.listId, content: request.body.card });
+
+  myCard.save(function (err, newCard) {
+    if (err) return console.error(err);
+
+    List.findOne({ _id: request.body.listId }, function (err, list) {
+      if (err) return console.error(err);
+      list.cards.push(newCard);
+
+      list.save(function (err) {
+        if (err) return handleError(err);
+        response.redirect('/');
+      });
+    });
+
+  });
+
 });
 
 app.listen(8080, function(){

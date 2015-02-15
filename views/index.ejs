@@ -22,7 +22,7 @@
       <div  class='list'>
       <form action="/cards" method="post" accept-charset="utf-8">
         <%=list[key].name%><br>
-        <input type="hidden" name="listId"  value="<%=key%>" />
+        <input type="hidden" name="listId"  value="<%=list[key]._id%>" />
         <input type="text" size="10" name="card" placeholder="Add a card..">
         <input type="submit" value="Add">
       </form>
