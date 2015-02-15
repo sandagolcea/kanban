@@ -9,17 +9,22 @@
 </head>
 <body>
   <div class="container">
-    <div class="fill">
     <h3>Welcome to KanBan</h3>
-    <form action="/lists" method="post" accept-charset="utf-8">
+    <form action="/lists" method="post" accept-charset="utf-8" class='listForm'>
       <input type="text" size="10" name="list" placeholder="Add a list..">
       <input type="submit" value="Add">
     </form>
+    <!-- Lists with cards holders -->
     <%if (list.length > 0) {%><p>Your cards are: </p> <%}%>
     <%for (i in list) { %>
-      <p class='list'><%=list[i]%></p>
+      <form action="/cards" method="post" accept-charset="utf-8" class='list'>
+        <%=list[i]%><br>
+        <input type="hidden" name="list"  value="<%=list[i]%>" />
+        <input type="text" size="10" name="card" placeholder="Add a card..">
+        <input type="submit" value="Add">
+      </form>
     <%}%>
-    </div>
+    <!-- End of lists with cards -->
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

@@ -11,12 +11,18 @@ var mainList = [];
 app.set('view engine','ejs');
 app.use(express.static(__dirname+'/public'));
 
-app.get('/', function(request,response){
+app.get('/', function (request,response) {
   response.render('index',{list : mainList});
 });
 
 app.post('/lists', parseUrlencoded, function (request, response) {
   mainList.push(request.body.list);
+  response.redirect('/');
+});
+
+app.post('/cards', parseUrlencoded, function (request,response) {
+  console.log(request.body.list);
+  console.log(request.body.card);
   response.redirect('/');
 });
 
