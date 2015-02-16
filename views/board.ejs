@@ -21,22 +21,28 @@
     <!-- Lists with cards holders -->
     <%for (var key in list) { %>
       <%if (list.hasOwnProperty(key)) { %>
-      <div  class='list'>
+      <div id="list_id_<%=list[key]._id%>" class='list'>
 
       <!-- Add a card -->
-      <form action="/card/<%=list[key]._id%>/<%=list[key]._creator%>" method="post" accept-charset="utf-8">
+      <form class="new-card-form" accept-charset="utf-8">
         <%=list[key].name%><br>
+        <input type="hidden" name="listId" value=<%=list[key]._id%>>
         <input type="text" size="10" name="card" placeholder="Add a card..">
         <input type="submit" value="Add">
       </form>
       <!-- End of card addition -->
-
+      
       <!-- List cards -->
-      <%if (list[key].cards) {%>
-        <%list[key].cards.forEach(function(card){ %>
-          <p class="cards"><%=card.content%></p>
-        <%});%>
-      <%}%>
+      <div class='cards-list'>
+        <%if (list[key].cards) {%>
+          
+          <%list[key].cards.forEach(function(card){ %>
+            <div class="cards" id="card_id_<%=card._id%>">
+              <p><%=card.content%></p>
+            </div>
+          <%});%>        
+        <%}%>
+      </div>
       <!-- end of cards listing -->
 
       </div>

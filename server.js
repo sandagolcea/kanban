@@ -31,7 +31,6 @@ app.get('/dashboard', function(request,response){
 
 // shows a board (collection of lists)
 app.get('/board/:id', function (request,response) {
-  console.log(request.params.id);
   List.find({_creator : request.params.id })
   .populate('cards') // only works if we pushed refs to children
   .exec(function (err, myLists) {
@@ -42,7 +41,6 @@ app.get('/board/:id', function (request,response) {
 
 // creates a new board and redirects back to dashboard
 app.post('/board', parseUrlencoded, function (request, response) {
-  console.log("Body is:"+request.body.boardId);
   new Board({ name: request.body.board })
   .save(function (err, newBoard) {
     if (err) return console.error(err);
@@ -69,7 +67,7 @@ app.post('/list/:boardId', parseUrlencoded, function (request, response) {
 });
 
 // creates a new card and redirects back to board
-app.post('/card/:listId/:boardId', parseUrlencoded, function (request,response) {
+app.post('/card/:listId/', parseUrlencoded, function (request,response) {
   new Card({ 
     _creator: request.params.listId, 
     content: request.body.card })
@@ -82,7 +80,7 @@ app.post('/card/:listId/:boardId', parseUrlencoded, function (request,response) 
 
         list.save(function (err) {
           if (err) return handleError(err);
-          response.redirect('/board/'+request.params.boardId);
+            response.json(newCard);
         });
       });
   });
@@ -91,23 +89,3 @@ app.post('/card/:listId/:boardId', parseUrlencoded, function (request,response) 
 app.listen(8080, function(){
   console.log("Application listening on localhost:8080..");
 });
-/*
-
-This is how my mainList object looks like
-
-{ {id: 452319974,
-  name: "Sanda",
-  cards: [ 
-          { id: 1, content: "My first card"},
-          { id: 2, content: "My second card"}
-  ]}, 
-  {
-  id: 8209375843,
-  name: "Jair",
-  cards: [ 
-          { id: 1, content: "My first card"},
-          { id: 2, content: "My second card"}
-  ]} 
-}
-
-*/

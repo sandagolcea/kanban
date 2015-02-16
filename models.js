@@ -28,3 +28,23 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
   console.log('Connection to mongodb successful!');
 });
+/*
+
+This is how my mainList object looks like
+without the boards. Inception++ I like it.
+{ {id: 452319974,
+  name: "Sanda",
+  cards: [ 
+          { id: 1, content: "My first card"},
+          { id: 2, content: "My second card"}
+  ]}, 
+  {
+  id: 8209375843,
+  name: "Jair",
+  cards: [ 
+          { id: 1, content: "My first card"},
+          { id: 2, content: "My second card"}
+  ]} 
+}
+
+*/
