@@ -20,41 +20,35 @@ app.get('/', function (request,response) {
   .populate('cards') // only works if we pushed refs to children
   .exec(function (err, myLists) {
     if (err) return console.error(err);
-    console.log(myLists);
     response.render('index',{list : myLists});
   }); 
-
 });
 
 app.post('/lists', parseUrlencoded, function (request, response) {
-  var myList = new List({ name: request.body.list });
-  
-  myList.save(function (err, newList) {
-    if (err) return console.error(err);
-    console.log(newList.id);
-    response.redirect('/');
-  });
-
+  new List({ name: request.body.list })
+    .save(function (err, newList) {
+        if (err) return console.error(err);
+        response.redirect('/');
+    });
 });
 
 app.post('/cards', parseUrlencoded, function (request,response) {
-  var myCard = new Card({ _creator: request.body.listId, content: request.body.card });
-
-  myCard.save(function (err, newCard) {
-    if (err) return console.error(err);
-
-    List.findOne({ _id: request.body.listId }, function (err, list) {
+  new Card({ 
+    _creator: request.body.listId, 
+    content: request.body.card })
+    .save(function (err, newCard) {
       if (err) return console.error(err);
-      list.cards.push(newCard);
 
-      list.save(function (err) {
-        if (err) return handleError(err);
-        response.redirect('/');
+      List.findOne({ _id: request.body.listId }, function (err, list) {
+        if (err) return console.error(err);
+        list.cards.push(newCard);
+
+        list.save(function (err) {
+          if (err) return handleError(err);
+          response.redirect('/');
+        });
       });
-    });
-
   });
-
 });
 
 app.listen(8080, function(){
@@ -64,13 +58,14 @@ app.listen(8080, function(){
 
 This is how my mainList object looks like
 
-{ "1234" : {
+{ {id: 452319974,
   name: "Sanda",
   cards: [ 
           { id: 1, content: "My first card"},
           { id: 2, content: "My second card"}
   ]}, 
-  "432" : {
+  {
+  id: 8209375843,
   name: "Jair",
   cards: [ 
           { id: 1, content: "My first card"},
