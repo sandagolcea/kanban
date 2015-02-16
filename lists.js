@@ -2,13 +2,13 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var Schema = mongoose.Schema;
 
-// var boardSchema = new Schema({
-//         name: String,
-//         lists : [{type: ObjectId, ref: 'List'}]
-// });
+var boardSchema = new Schema({
+        name: String,
+        lists : [{type: ObjectId, ref: 'List'}]
+});
 
 var listSchema = new Schema({
-        // _creator : { type: ObjectId, ref: 'Board' },
+        _creator : { type: ObjectId, ref: 'Board' },
         name: String,
         cards : [{type: ObjectId, ref: 'Card'}]
 });
@@ -18,7 +18,7 @@ var cardSchema = new Schema({
         content: String
 });
 
-// mongoose.model('Board', boardSchema);
+mongoose.model('Board', boardSchema);
 mongoose.model('List', listSchema);
 mongoose.model('Card', cardSchema);
 

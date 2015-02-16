@@ -10,27 +10,36 @@
 <body>
   <div class="container">
     <h3>Welcome to KanBan</h3>
-    <form action="/lists" method="post" accept-charset="utf-8" class='listForm'>
+    <!-- Add a list -->
+    <form action="/lists/<%=boardId%>" method="post" accept-charset="utf-8" class='listForm'>
       <input type="text" size="10" name="list" placeholder="Add a list..">
       <input type="submit" value="Add">
     </form>
+    <!-- End of list addition -->
     <%if (Object.keys(list).length > 0) {%><p>Your cards are: </p> <%}%>
     
     <!-- Lists with cards holders -->
     <%for (var key in list) { %>
       <%if (list.hasOwnProperty(key)) { %>
       <div  class='list'>
+
+      <!-- Add a card -->
       <form action="/cards" method="post" accept-charset="utf-8">
         <%=list[key].name%><br>
         <input type="hidden" name="listId"  value="<%=list[key]._id%>" />
+        <input type="hidden" name="creatorBoardId"  value="<%=list[key]._creator%>" />
         <input type="text" size="10" name="card" placeholder="Add a card..">
         <input type="submit" value="Add">
       </form>
+      <!-- End of card addition -->
+
+      <!-- List cards -->
       <%if (list[key].cards) {%>
         <%list[key].cards.forEach(function(card){ %>
           <p class="cards"><%=card.content%></p>
         <%});%>
       <%}%>
+      <!-- end of cards listing -->
 
       </div>
       <%}%>

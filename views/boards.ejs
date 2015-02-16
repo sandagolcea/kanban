@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Boards</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <h1>Boards!</h1>
+  <!-- Add a new board -->
+  <form action="/boards" method="post" accept-charset="utf=8">
+      <input type="text" size="10" name="board" placeholder="Add a board..">
+      <input type="submit" value="Add">
+  </form>
+  
+  <!-- Listing all the boards -->
+  <%for (var key in board) { %>
+    <%if (board.hasOwnProperty(key)) { %>
+      <form action="/lists/<%=board[key]._id%>" method="get" accept-charset="utf-8">
+        <p class="boards"><%=board[key].name%><br>
+        <input type="submit" value="Open Card">
+        </p>
+      </form>
+    <%}%>
+  <%}%>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../cardMaker.js" type="text/javascript"></script>
+</body>
+</html>

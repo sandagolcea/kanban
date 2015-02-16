@@ -10,25 +10,57 @@ var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
 var List = mongoose.model('List');
 var Card = mongoose.model('Card');
+var Board = mongoose.model('Board');
 
 app.set('view engine','ejs');
 app.use(express.static(__dirname+'/public'));
 
-app.get('/', function (request,response) {
+app.get('/', function(request,response){
+  response.redirect('/boards');
+});
 
-  List.find()
+app.get('/boards', function(request,response){
+  Board.find()
+  .populate('lists')
+  .exec(function (err, myBoard) {
+    if (err) return console.error(err);
+    response.render('boards', {board: myBoard});
+  });
+});
+
+app.get('/lists/:id', function (request,response) {
+  console.log(request.params.id);
+  List.find({_creator : request.params.id })
   .populate('cards') // only works if we pushed refs to children
   .exec(function (err, myLists) {
     if (err) return console.error(err);
-    response.render('index',{list : myLists});
-  }); 
+    response.render('index',{boardId: request.params.id, list : myLists});
+  });
 });
 
-app.post('/lists', parseUrlencoded, function (request, response) {
-  new List({ name: request.body.list })
+app.post('/boards', parseUrlencoded, function (request, response) {
+  console.log("Body is:"+request.body.boardId);
+  new Board({ name: request.body.board })
+  .save(function (err, newBoard) {
+    if (err) return console.error(err);
+    response.redirect('/boards');  
+  });
+});
+
+app.post('/lists/:id', parseUrlencoded, function (request, response) {
+  new List({ 
+    _creator: request.params.id,
+    name: request.body.list })
     .save(function (err, newList) {
         if (err) return console.error(err);
-        response.redirect('/');
+        Board.findOne({_id: request.params.id}, function (err, board) {
+          if (err) return console.error(err);
+          board.lists.push(newList);
+          board.save(function (err) {
+            if (err) return handleError(err);
+            response.redirect('/lists/' + request.params.id);
+          });
+        })
     });
 });
 
@@ -45,7 +77,7 @@ app.post('/cards', parseUrlencoded, function (request,response) {
 
         list.save(function (err) {
           if (err) return handleError(err);
-          response.redirect('/');
+          response.redirect('/lists/'+request.body.creatorBoardId);
         });
       });
   });
