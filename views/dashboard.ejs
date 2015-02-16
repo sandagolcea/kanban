@@ -9,7 +9,7 @@
 <body>
   <h1>Boards!</h1>
   <!-- Add a new board -->
-  <form action="/boards" method="post" accept-charset="utf=8">
+  <form action="/board" method="post" accept-charset="utf=8">
       <input type="text" size="10" name="board" placeholder="Add a board..">
       <input type="submit" value="Add">
   </form>
@@ -17,7 +17,7 @@
   <!-- Listing all the boards -->
   <%for (var key in board) { %>
     <%if (board.hasOwnProperty(key)) { %>
-      <form action="/lists/<%=board[key]._id%>" method="get" accept-charset="utf-8">
+      <form action="/board/<%=board[key]._id%>" method="get" accept-charset="utf-8">
         <p class="boards"><%=board[key].name%><br>
         <input type="submit" value="Open Card">
         </p>

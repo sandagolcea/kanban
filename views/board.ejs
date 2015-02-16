@@ -11,7 +11,7 @@
   <div class="container">
     <h3>Welcome to KanBan</h3>
     <!-- Add a list -->
-    <form action="/lists/<%=boardId%>" method="post" accept-charset="utf-8" class='listForm'>
+    <form action="/list/<%=boardId%>" method="post" accept-charset="utf-8" class='listForm'>
       <input type="text" size="10" name="list" placeholder="Add a list..">
       <input type="submit" value="Add">
     </form>
@@ -24,10 +24,8 @@
       <div  class='list'>
 
       <!-- Add a card -->
-      <form action="/cards" method="post" accept-charset="utf-8">
+      <form action="/card/<%=list[key]._id%>/<%=list[key]._creator%>" method="post" accept-charset="utf-8">
         <%=list[key].name%><br>
-        <input type="hidden" name="listId"  value="<%=list[key]._id%>" />
-        <input type="hidden" name="creatorBoardId"  value="<%=list[key]._creator%>" />
         <input type="text" size="10" name="card" placeholder="Add a card..">
         <input type="submit" value="Add">
       </form>
