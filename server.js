@@ -60,13 +60,14 @@ app.post('/list/:boardId', parseUrlencoded, function (request, response) {
           board.lists.push(newList);
           board.save(function (err) {
             if (err) return handleError(err);
-            response.redirect('/board/' + request.params.boardId);
+            // response.redirect('/board/' + request.params.boardId);
+            response.json(newList);
           });
         })
     });
 });
 
-// creates a new card and redirects back to board
+// creates a new card
 app.post('/card/:listId/', parseUrlencoded, function (request,response) {
   new Card({ 
     _creator: request.params.listId, 
@@ -80,7 +81,7 @@ app.post('/card/:listId/', parseUrlencoded, function (request,response) {
 
         list.save(function (err) {
           if (err) return handleError(err);
-            response.json(newCard);
+          response.json(newCard);
         });
       });
   });
