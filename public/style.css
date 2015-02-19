@@ -20,6 +20,11 @@ form {
                 Lists
 ************************************/
 
+.new-card-form {
+  padding: 5px;
+  text-align: center; 
+}
+
 .listForm {
   text-align: left;
 }
