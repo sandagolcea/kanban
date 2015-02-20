@@ -44,7 +44,8 @@ app.post('/board', parseUrlencoded, function (request, response) {
   new Board({ name: request.body.board })
   .save(function (err, newBoard) {
     if (err) return console.error(err);
-    response.redirect('/dashboard');  
+    // response.redirect('/dashboard');  
+    response.json(newBoard);
   });
 });
 

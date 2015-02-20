@@ -6,7 +6,6 @@ $(document).ready(function(){
     var listName = $(this).find( "input[name='list']" ).val(); 
     var boardId = $(this).find("input[name='boardId']").val();
 
-    // action="/list/<%=boardId%>" method="post"
     $.post("/list/"+boardId, {list: listName} ,function(data, status){
       
       // creating the form for card addition, that is shown inside each list
@@ -19,18 +18,14 @@ $(document).ready(function(){
 
       $listOfLists = $('.list-of-lists');
       $listOfLists.append(
-      // <div id="list_id_<%=list[key]._id%>" class='list'>
         $('<div>', { class: 'list', id: 'list_id_'+data._id })
             .append($form)
             .append("<div class='cards-list'></div>")
         );
     }); 
   });
-
   // Card action starts here:
   $('.new-card-form').on('submit', submitNewCard);
-
-
 });
 
 submitNewCard = function (e) {

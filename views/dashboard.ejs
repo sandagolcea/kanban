@@ -8,13 +8,14 @@
 </head>
 <body>
   <h1>Boards!</h1>
-  <!-- Add a new board -->
-  <form action="/board" method="post" accept-charset="utf=8">
+  <!-- Adding a new board -->
+  <form class='new-board-form' accept-charset="utf=8">
       <input type="text" size="10" name="board" placeholder="Add a board..">
       <input type="submit" value="Add">
   </form>
   
   <!-- Listing all the boards -->
+  <div class='list-of-boards'>
   <%for (var key in board) { %>
     <%if (board.hasOwnProperty(key)) { %>
       <form action="/board/<%=board[key]._id%>" method="get" accept-charset="utf-8">
@@ -24,8 +25,9 @@
       </form>
     <%}%>
   <%}%>
+  </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="../cardMaker.js" type="text/javascript"></script>
+  <script src="../dashboardMaker.js" type="text/javascript"></script>
 </body>
 </html>
