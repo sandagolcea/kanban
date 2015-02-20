@@ -7,15 +7,7 @@ $(document).ready(function(){
     var boardId = $(this).find("input[name='boardId']").val();
 
     $.post("/list/"+boardId, {list: listName} ,function(data, status){
-      
-      // creating the form for card addition, that is shown inside each list
-      $form = $("<form class='new-card-form' accept-charset='utf-8'></form>");
-      $form.append("<p>"+data.name+"</p><br>");
-      $form.append('<input type="hidden" name="listId" value='+data._id+' />');
-      $form.append('<input type="text" size="10" name="card" placeholder="Add a card.." />');
-      $form.append('<input type="submit" value="Add" />');
-      $form.on('submit', submitNewCard);
-
+      cardFormMaker(data);
       $listOfLists = $('.list-of-lists');
       $listOfLists.append(
         $('<div>', { class: 'list', id: 'list_id_'+data._id })
@@ -24,11 +16,11 @@ $(document).ready(function(){
         );
     }); 
   });
-  // Card action starts here:
   $('.new-card-form').on('submit', submitNewCard);
 });
 
 submitNewCard = function (e) {
+    // Card action starts here:
     e.preventDefault();
 
     var cardName = $(this).find( "input[name='card']" ).val(); 
@@ -40,4 +32,14 @@ submitNewCard = function (e) {
           $('<div>', { class: 'cards', id: data._id })
             .append("<p>"+data.content+"</p>"));
     });
+  }
+
+  cardFormMaker = function(data) {
+    // creating the form for card addition, that is shown inside each list
+    $form = $("<form class='new-card-form' accept-charset='utf-8'></form>");
+    $form.append("<p>"+data.name+"</p><br>");
+    $form.append('<input type="hidden" name="listId" value='+data._id+' />');
+    $form.append('<input type="text" size="10" name="card" placeholder="Add a card.." />');
+    $form.append('<input type="submit" value="Add" />');
+    $form.on('submit', submitNewCard);
   }

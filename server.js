@@ -19,15 +19,17 @@ app.get('/', function(request,response){
   response.redirect('/dashboard');
 });
 
-// shows a dashboard (collection of boards)
-app.get('/dashboard', function(request,response){
+returnAllBoards = function(request,response){
   Board.find()
   .populate('lists')
   .exec(function (err, myBoard) {
     if (err) return console.error(err);
     response.render('dashboard', {board: myBoard});
   });
-});
+}
+
+// shows a dashboard (collection of boards)
+app.get('/dashboard', returnAllBoards);
 
 // shows a board (collection of lists)
 app.get('/board/:id', function (request,response) {
@@ -44,7 +46,6 @@ app.post('/board', parseUrlencoded, function (request, response) {
   new Board({ name: request.body.board })
   .save(function (err, newBoard) {
     if (err) return console.error(err);
-    // response.redirect('/dashboard');  
     response.json(newBoard);
   });
 });
@@ -61,7 +62,6 @@ app.post('/list/:boardId', parseUrlencoded, function (request, response) {
           board.lists.push(newList);
           board.save(function (err) {
             if (err) return handleError(err);
-            // response.redirect('/board/' + request.params.boardId);
             response.json(newList);
           });
         })
@@ -91,3 +91,4 @@ app.post('/card/:listId/', parseUrlencoded, function (request,response) {
 app.listen(8080, function(){
   console.log("Application listening on localhost:8080..");
 });
+
