@@ -4,7 +4,7 @@
   "description": "Trello like application for practice - kanban board",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "kanban",
@@ -18,5 +18,10 @@
     "ejs": "^2.2.4",
     "express": "^4.11.2",
     "mongoose": "^3.8.23"
+  },
+  "devDependencies": {
+    "chai": "^2.1.1",
+    "mocha": "^2.2.1",
+    "webdriverio": "^2.4.5"
   }
 }

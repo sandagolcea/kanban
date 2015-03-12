@@ -20,6 +20,7 @@ app.get('/', function(request,response){
 });
 
 returnAllBoards = function(request,response){
+  console.log('got to homepage');
   Board.find()
   .populate('lists')
   .exec(function (err, myBoard) {
